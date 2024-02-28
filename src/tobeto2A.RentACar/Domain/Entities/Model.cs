@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Domain.Entities;
 public class Model : Entity<Guid>
 {
+
     public Model() { }
 
     public short Year { get; set; }
