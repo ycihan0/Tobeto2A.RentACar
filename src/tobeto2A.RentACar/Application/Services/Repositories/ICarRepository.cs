@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Application.Services.Repositories;
-public interface IModelRepository : IAsyncRepository<Model, Guid>, IRepository<Model, Guid>
+public interface ICarRepository : IAsyncRepository<Car, Guid>, IRepository<Car, Guid>
 {
+
 }
