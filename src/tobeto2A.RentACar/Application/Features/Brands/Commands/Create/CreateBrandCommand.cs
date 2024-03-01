@@ -1,4 +1,6 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Brands.Rules;
+using Application.Services.Repositories;
+using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using System;
@@ -18,6 +20,8 @@ public class CreateBrandCommand:IRequest<CreatedBrandResponse>
     public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand ,CreatedBrandResponse>
     {
         private readonly IBrandRepository _brandRepository;
+        private readonly IMapper _mapper;
+        private readonly BrandBusinessRules _brandBusinessRules;
 
         public CreateBrandCommandHandler(IBrandRepository brandRepository)
         {
@@ -26,16 +30,20 @@ public class CreateBrandCommand:IRequest<CreatedBrandResponse>
 
         public async Task<CreatedBrandResponse> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
         {
-            Brand brand = new();
-            brand.Name = request.Name;
-            brand.Logo = request.Logo;
-             
+            await _brandBusinessRules.CarShouldNotExistsWithSameName(request.Name);
+
+            //Brand brand = new();
+            //brand.Name = request.Name;
+            //brand.Logo = request.Logo;
+            Brand brand = _mapper.Map<Brand>(request);//yukarıdakilerin yerine kolayca maple
+
             Brand addedBrand=await _brandRepository.AddAsync(brand);
 
-            CreatedBrandResponse createdBrandResponse = new();
-            createdBrandResponse.Name = addedBrand.Name;
-            createdBrandResponse.Logo = addedBrand.Logo;
-            createdBrandResponse.Id = addedBrand.Id;
+            //CreatedBrandResponse createdBrandResponse = new();
+            //createdBrandResponse.Name = addedBrand.Name;
+            //createdBrandResponse.Logo = addedBrand.Logo;
+            //createdBrandResponse.Id = addedBrand.Id;
+            CreatedBrandResponse createdBrandResponse = _mapper.Map<CreatedBrandResponse>(addedBrand);
             return createdBrandResponse;
         } 
     }
