@@ -13,8 +13,6 @@ public class Model : Entity<Guid>
 
     public short Year { get; set; }
 
-    public decimal DailyPrice { get; set; }
-
     public Guid BrandId { get; set; }
 
     public Guid FuelId { get; set; }
