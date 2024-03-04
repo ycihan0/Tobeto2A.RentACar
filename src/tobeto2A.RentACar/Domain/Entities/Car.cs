@@ -8,4 +8,7 @@ using System.Threading.Tasks;
 namespace Domain.Entities;
 public class Car : Entity<Guid>
 {
+    public string Name { get; set; }
+    public Guid BrandId { get; set; }
+    public int MyProperty { get; set; }
 }
