@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Features.Brands.Constants;
+using Application.Services.Repositories;
 using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
@@ -21,6 +22,6 @@ public class BrandBusinessRules : BaseBusinessRules
     {
         Brand? brandWithSameName = await _brandRepository.GetAsync(b => b.Name == name);
         if (brandWithSameName is not null)
-            throw new BusinessException("Aynı isme sahip bir marka zaten mevcuttur");
+            throw new BusinessException(BrandsMessages.BrandAlreadyExist);
     }
 }
